@@ -14,7 +14,7 @@ class Solution {
         void GenerateSubsetProduct(int index, int currentProduct, bool isEmpty) {
             if (index == n) {
                 if (!isEmpty) {     // If the subset is not empty, update the maximum product
-                    cout << "currentProduct: " << currentProduct << endl;
+                    // cout << "currentProduct: " << currentProduct << endl;
                     maxProduct = max(maxProduct, currentProduct);
                     return;
                 }
@@ -30,8 +30,8 @@ class Solution {
 
         // Find the maximum product of any subset with O(2^n) time complexity
         int RawMaxSubsetProduct() {
-            maxProduct = INT_MIN;
-            GenerateSubsetProduct(0,1,true);
+            maxProduct = LONG_LONG_MIN;
+            GenerateSubsetProduct(0, 1, true);
             return maxProduct;
         }
 
@@ -64,7 +64,7 @@ class Solution {
 int main() {
     Solution sol;
     sol.input();
-    // cout << "Brute force: " << sol.RawMaxSubsetProduct() << endl;
+    cout << "Brute force: " << sol.RawMaxSubsetProduct() << endl;
     cout << "Greedy: " << sol.GreedyMaxSubsetProduct() << endl;
     return 0;
 }

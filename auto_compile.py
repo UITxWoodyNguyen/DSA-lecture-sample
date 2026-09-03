@@ -42,21 +42,22 @@ def run_executable(exe_path):
     try:
         result = subprocess.run([str(exe_path)], capture_output=True, text=True, timeout=10)
         if result.returncode == 0:
-            print(f"  Output: {result.stdout.strip() or '(no output)'}")
+            print(f"[+] Output: {exe_path.name}")
+            print(f"{result.stdout.strip() or '(no output)'}")
         else:
-            print(f"  Runtime error (exit code {result.returncode}): {result.stderr.strip()}")
+            print(f"[!] Runtime error (exit code {result.returncode}): {result.stderr.strip()}")
     except subprocess.TimeoutExpired:
-        print(f"  Timeout running executable")
+        print(f"[!] Timeout running executable")
     except Exception as e:
-        print(f"  Error running executable: {e}")
+        print(f"[!] Error running executable: {e}")
 
 
 def delete_executable(exe_path):
     try:
         exe_path.unlink()
-        print(f"  Deleted: {exe_path.name}")
+        print(f"[+] Deleted: {exe_path.name}")
     except Exception as e:
-        print(f"  Failed to delete {exe_path.name}: {e}")
+        print(f"[!] Failed to delete {exe_path.name}: {e}")
 
 
 def select_file(cpp_files):
@@ -74,9 +75,9 @@ def select_file(cpp_files):
                 return cpp_files[idx]
             print("Invalid selection. Try again.")
         except ValueError:
-            print("Please enter a valid number.")
+            print("[!] Please enter a valid number.")
         except KeyboardInterrupt:
-            print("\nCancelled.")
+            print("\n[!] Cancelled.")
             return None
 
 
