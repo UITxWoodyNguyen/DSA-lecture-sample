@@ -1,66 +1,55 @@
 #include <iostream>
 #include <climits>
+#include <algorithm>
 using namespace std;
 
-class Solution {
-    public:
-        int n, a[1000], maxProduct;
+void generateSubsetProduct(const int a[], int n, int index, long long currentProduct, bool isEmpty, long long& maxProduct) {
+    if (index == n) {
+        if (!isEmpty) maxProduct = max(maxProduct, currentProduct);
+        return;
+    }
 
-        void input() {
-            cin >> n;
-            for(int i = 0; i < n; i++) cin >> a[i];
-        }
+    generateSubsetProduct(a, n, index + 1, currentProduct * a[index], false, maxProduct);
+    generateSubsetProduct(a, n, index + 1, currentProduct, isEmpty, maxProduct);
+}
 
-        void GenerateSubsetProduct(int index, int currentProduct, bool isEmpty) {
-            if (index == n) {
-                if (!isEmpty) maxProduct = max(maxProduct, currentProduct);
-                return;
+long long rawMaxSubsetProduct(const int a[], int n) {
+    long long maxProduct = LLONG_MIN;
+    generateSubsetProduct(a, n, 0, 1, true, maxProduct);
+    return maxProduct;
+}
+
+long long greedyMaxSubsetProduct(const int a[], int n) {
+    if (n == 1) return a[0];
+
+    int cntZero = 0;
+    int cntNegative = 0;
+    long long product = 1;
+    int maxNegative = INT_MIN;
+
+    for (int i = 0; i < n; i++) {
+        if (a[i] == 0) cntZero++;
+        else {
+            product *= a[i];
+            if (a[i] < 0) {
+                cntNegative++;
+                maxNegative = max(maxNegative, a[i]);
             }
-
-            // Choose a[i]
-            GenerateSubsetProduct(index + 1, currentProduct * a[index], false);
-
-            // Not choose a[i]
-            GenerateSubsetProduct(index + 1, currentProduct, isEmpty);
         }
+    }
 
-        // Find the maximum product of any subset with O(2^n) time complexity
-        int RawMaxSubsetProduct() {
-            maxProduct = LONG_LONG_MIN;
-            GenerateSubsetProduct(0, 1, true);
-            return maxProduct;
-        }
-
-        // Find the maximum product subset using Greedy Algorithm with O(n) time complexity
-        int GreedyMaxSubsetProduct() {
-            if (n == 1) return a[0];
-
-            int cntZero = 0;
-            int cntNegative = 0;
-            int product = 1;
-            int maxNegative = INT_MIN;
-
-            for (int i = 0; i < n; i++) {
-                if (!a[i]) cntZero++;
-                else {
-                    product *= a[i];
-                    if (a[i] < 0) {
-                        cntNegative++;
-                        maxNegative = max(maxNegative, a[i]);
-                    }
-                }
-            }
-
-            if ((cntZero == n) || (cntNegative == 1 && cntZero == n-1)) return 0;
-            if (cntNegative & 1) product /= maxNegative;  // If odd number of negative numbers, remove the largest negative
-            return product;
-        }
-};
+    if ((cntZero == n) || (cntNegative == 1 && cntZero == n - 1)) return 0;
+    if (cntNegative & 1) product /= maxNegative;
+    return product;
+}
 
 int main() {
-    Solution sol;
-    sol.input();
-    cout << "Brute force: " << sol.RawMaxSubsetProduct() << endl;
-    cout << "Greedy: " << sol.GreedyMaxSubsetProduct() << endl;
+    int n;
+    cin >> n;
+    int a[1000];
+    for (int i = 0; i < n; i++) cin >> a[i];
+
+    cout << "Brute force: " << rawMaxSubsetProduct(a, n) << endl;
+    cout << "Greedy: " << greedyMaxSubsetProduct(a, n) << endl;
     return 0;
 }

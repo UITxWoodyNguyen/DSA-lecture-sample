@@ -18,9 +18,10 @@ Brute force solves problems by enumerating all possible candidates and checking 
 ### Code Example
 ```cpp
 // From brute-force.cpp - Linear Search
-int LinearSearch(int value) {
-    for(int i = 0; i < n; i++) 
-        if (arr[i] == value) return i+1;
+int linearSearch(const int arr[], int n, int value) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == value) return i + 1;
+    }
     return -1;
 }
 ```
@@ -47,7 +48,7 @@ Break problem into smaller subproblems of the same type, solve recursively, then
 ### Code Examples
 ```cpp
 // From DnC-sample-1.cpp - Binary Search (Iterative)
-int BinarySearch(int value) {
+int binarySearch(const int arr[], int n, int value) {
     int left = 0, right = n - 1;
     while (left <= right) {
         int mid = (left + right) / 2;
@@ -60,13 +61,38 @@ int BinarySearch(int value) {
 ```
 
 ```cpp
+// From DnC-sample-1.cpp - Binary Search (Recursive)
+int recBinarySearch(const int arr[], int value, int left, int right) {
+    if (left > right) return -1;
+    int mid = (left + right) / 2;
+    if (arr[mid] == value) return mid;
+    if (arr[mid] > value) return recBinarySearch(arr, value, left, mid - 1);
+    return recBinarySearch(arr, value, mid + 1, right);
+}
+```
+
+```cpp
 // From DnC-sample-2.cpp - Fast Power (Recursive)
 int power(int x, int n) {
     if (n == 0) return 1;
     if (n == 1) return x;
+
     if (n & 1) return x * power(x, n - 1);
     int temp = power(x, n / 2);
     return temp * temp;
+}
+```
+
+```cpp
+// From DnC-sample-2.cpp - Fast Power (Iterative)
+int rawPower(int x, int n) {
+    int result = 1;
+    while (n) {
+        if (n & 1) result *= x;
+        x *= x;
+        n /= 2;
+    }
+    return result;
 }
 ```
 
@@ -88,15 +114,35 @@ Make locally optimal choice at each step with hope of finding global optimum. Wo
 
 ### Code Example
 ```cpp
+// From Greedy-sample.cpp - Brute Force (All Subsets)
+void generateSubsetProduct(const int a[], int n, int index, long long currentProduct, bool isEmpty, long long& maxProduct) {
+    if (index == n) {
+        if (!isEmpty) maxProduct = max(maxProduct, currentProduct);
+        return;
+    }
+    generateSubsetProduct(a, n, index + 1, currentProduct * a[index], false, maxProduct);
+    generateSubsetProduct(a, n, index + 1, currentProduct, isEmpty, maxProduct);
+}
+
+long long rawMaxSubsetProduct(const int a[], int n) {
+    long long maxProduct = LLONG_MIN;
+    generateSubsetProduct(a, n, 0, 1, true, maxProduct);
+    return maxProduct;
+}
+```
+
+```cpp
 // From Greedy-sample.cpp - Greedy Max Subset Product
-int GreedyMaxSubsetProduct() {
+long long greedyMaxSubsetProduct(const int a[], int n) {
     if (n == 1) return a[0];
 
-    int cntZero = 0, cntNegative = 0;
-    int product = 1, maxNegative = INT_MIN;
+    int cntZero = 0;
+    int cntNegative = 0;
+    long long product = 1;
+    int maxNegative = INT_MIN;
 
     for (int i = 0; i < n; i++) {
-        if (!a[i]) cntZero++;
+        if (a[i] == 0) cntZero++;
         else {
             product *= a[i];
             if (a[i] < 0) {
@@ -106,7 +152,7 @@ int GreedyMaxSubsetProduct() {
         }
     }
 
-    if ((cntZero == n) || (cntNegative == 1 && cntZero == n-1)) return 0;
+    if ((cntZero == n) || (cntNegative == 1 && cntZero == n - 1)) return 0;
     if (cntNegative & 1) product /= maxNegative;
     return product;
 }
@@ -132,9 +178,9 @@ Solve by breaking into overlapping subproblems, storing results to avoid recompu
 ### Code Example
 ```cpp
 // From DP-sample.cpp - Fibonacci (Tabulation)
-void GenerateFibo() {
-    fibo[0] = 0;
-    fibo[1] = 1;
+void generateFibo(int n, int fibo[]) {
+    if (n >= 0) fibo[0] = 0;
+    if (n >= 1) fibo[1] = 1;
     for (int i = 2; i <= n; i++) {
         fibo[i] = fibo[i - 1] + fibo[i - 2];
     }
