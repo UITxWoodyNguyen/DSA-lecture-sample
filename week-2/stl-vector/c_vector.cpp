@@ -30,7 +30,7 @@ template <typename T>
 void c_vector<T>::resize() {
     capacity_ *= 2;
     T* new_arr = new T[capacity_];
-    for (int i = 0; i < size_; ++i) new_arr[i] = std::move(arr[i]);
+    for (int i = 0; i < size_; ++i) new_arr[i] = arr[i];
     delete[] arr;
     arr = new_arr;
 }
@@ -81,7 +81,7 @@ template <typename T>
 void c_vector<T>::insert(int index, const T& value) {
     if (index < 0 || index > size_) throw std::out_of_range("Index out of range");
     if (size_ == capacity_) resize();
-    for (int i = size_; i > index; --i) arr[i] = std::move(arr[i - 1]);
+    for (int i = size_; i > index; --i) arr[i] = arr[i-1];
     arr[index] = value;
     ++size_;
 }
@@ -89,7 +89,7 @@ void c_vector<T>::insert(int index, const T& value) {
 template <typename T>
 void c_vector<T>::erase(int index) {
     if (index < 0 || index >= size_) throw std::out_of_range("Index out of range");
-    for (int i = index; i < size_ - 1; ++i) arr[i] = std::move(arr[i + 1]);
+    for (int i = index; i < size_ - 1; ++i) arr[i] = arr[i + 1];
     --size_;
 }
 
