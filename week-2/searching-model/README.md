@@ -6,13 +6,15 @@ Mô phỏng và so sánh các thuật toán tìm kiếm cơ bản trong DSA.
 
 ```
 searching-model/
-├── LinearSearchModel.cpp      # Linear Search (3 versions)
-├── BinarySearchModel.cpp      # Binary Search (iterative + recursive)
-├── InterpolationSearchModel.cpp # Interpolation Search (iterative + recursive)
-├── LinearSearch.md            # Chi tiết Linear Search
-├── BinarySearch.md            # Chi tiết Binary Search
-├── InterpolationSearch.md     # Chi tiết Interpolation Search
-└── README.md                  # File này
+├── src/
+│   ├── LinearSearchModel.cpp           # Linear Search (3 versions)
+│   ├── BinarySearchModel.cpp           # Binary Search (iterative + recursive)
+│   └── InterpolationSearchModel.cpp    # Interpolation Search (iterative + recursive)
+├── docs/
+│   ├── LinearSearch.md                 # Chi tiết Linear Search
+│   ├── BinarySearch.md                 # Chi tiết Binary Search
+│   └── InterpolationSearch.md          # Chi tiết Interpolation Search
+└── README.md                           # File này
 ```
 
 ---
@@ -72,15 +74,15 @@ Cần tìm kiếm?
 
 ```bash
 # Linear Search
-g++ LinearSearchModel.cpp -o linear
+g++ src/LinearSearchModel.cpp -o linear
 ./linear
 
 # Binary Search
-g++ BinarySearchModel.cpp -o binary
+g++ src/BinarySearchModel.cpp -o binary
 ./binary
 
 # Interpolation Search
-g++ InterpolationSearchModel.cpp -o interpolation
+g++ src/InterpolationSearchModel.cpp -o interpolation
 ./interpolation
 ```
 
@@ -88,9 +90,9 @@ g++ InterpolationSearchModel.cpp -o interpolation
 
 ## Tài liệu tham khảo chi tiết
 
-- [Linear Search](./LinearSearch.md) - 3 phiên bản: for, while, sentinel
-- [Binary Search](./BinarySearch.md) - Iterative, recursive, lower/upper bound, variants
-- [Interpolation Search](./InterpolationSearch.md) - Công thức nội suy, hybrid approach, edge cases
+- [Linear Search](./docs/LinearSearch.md) - 3 phiên bản: for, while, sentinel
+- [Binary Search](./docs/BinarySearch.md) - Iterative, recursive, lower/upper bound, variants
+- [Interpolation Search](./docs/InterpolationSearch.md) - Công thức nội suy, hybrid approach, edge cases
 
 ---
 
