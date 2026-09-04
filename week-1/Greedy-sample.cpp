@@ -13,20 +13,16 @@ class Solution {
 
         void GenerateSubsetProduct(int index, int currentProduct, bool isEmpty) {
             if (index == n) {
-                if (!isEmpty) {     // If the subset is not empty, update the maximum product
-                    // cout << "currentProduct: " << currentProduct << endl;
-                    maxProduct = max(maxProduct, currentProduct);
-                    return;
-                }
-
-                // Choose a[i]
-                GenerateSubsetProduct(index + 1, currentProduct * a[index], false);
-
-                // Not choose a[i]
-                GenerateSubsetProduct(index + 1, currentProduct, isEmpty);
+                if (!isEmpty) maxProduct = max(maxProduct, currentProduct);
+                return;
             }
-        }
 
+            // Choose a[i]
+            GenerateSubsetProduct(index + 1, currentProduct * a[index], false);
+
+            // Not choose a[i]
+            GenerateSubsetProduct(index + 1, currentProduct, isEmpty);
+        }
 
         // Find the maximum product of any subset with O(2^n) time complexity
         int RawMaxSubsetProduct() {
