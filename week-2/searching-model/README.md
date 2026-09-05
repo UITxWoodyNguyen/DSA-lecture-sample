@@ -25,7 +25,7 @@ searching-model/
 |------------|-----------|------------|--------------|-------|------------------|
 | **Linear Search** | Không cần sort | O(n) | O(n) | O(1) | ⭐ Rất dễ |
 | **Binary Search** | **Đã sort**, random access | O(log n) | O(log n) | O(1) | ⭐⭐ Trung bình |
-| **Interpolation Search** | **Đã sort + Uniform + Numeric** | **O(log log n)** | O(n) | O(1) | ⭐⭐ Trung bình |
+| **Interpolation Search** | **Đã sort + Uniform + Numeric** | **O(log(n))** | O(n) | O(1) | ⭐⭐ Trung bình |
 
 ---
 
@@ -46,7 +46,7 @@ Cần tìm kiếm?
     │   └─ → Binary Search (đủ nhanh, an toàn)
     │
     ├─ Dữ liệu số, phân bố ĐỀU (uniform)?
-    │   └─ → Interpolation Search (nhanh nhất O(log log n))
+    │   └─ → Interpolation Search (nhanh nhất O(log(n)))
     │
     ├─ Dữ liệu số, phân bố LỆCH (skewed)?
     │   └─ → Binary Search (worst-case O(log n) đảm bảo)
@@ -66,7 +66,7 @@ Cần tìm kiếm?
 | 10⁹ | 1,000,000,000 | 30 | ~5 |
 | 10¹² | 10¹² | 40 | ~6 |
 
-*Interpolation Search chỉ đạt O(log log n) khi dữ liệu phân bố đều. Nếu lệch → O(n) tệ hơn Linear Search.*
+*Interpolation Search chỉ đạt O(log(n)) khi dữ liệu phân bố đều. Nếu lệch → O(n) tệ hơn Linear Search.*
 
 ---
 
