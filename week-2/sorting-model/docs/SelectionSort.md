@@ -26,6 +26,90 @@ while i < n:
     i++
 ```
 
+**Step-by-step Running**
+
+**Input:** `arr = [64, 25, 12, 22, 11]` (n = 5)
+
+### Vòng lặp i = 0: Tìm min trong [0..4]
+```
+Trước:  [64, 25, 12, 22, 11]
+         [0] [1] [2] [3] [4]
+
+minIdx = 0 (arr[0] = 64)
+j = 1: arr[1] = 25 < 64  → minIdx = 1
+j = 2: arr[2] = 12 < 25  → minIdx = 2
+j = 3: arr[3] = 22 > 12  → không đổi
+j = 4: arr[4] = 11 < 12  → minIdx = 4
+
+minIdx = 4 (giá trị 11)
+swap(arr[0], arr[4]) → [11, 25, 12, 22, 64]
+
+Sau:    [11, 25, 12, 22, 64]
+        ✓ Sorted: [11]
+```
+
+### Vòng lặp i = 1: Tìm min trong [1..4]
+```
+Trước:  [11, 25, 12, 22, 64]
+         [0] [1] [2] [3] [4]
+
+minIdx = 1 (arr[1] = 25)
+j = 2: arr[2] = 12 < 25  → minIdx = 2
+j = 3: arr[3] = 22 > 12  → không đổi
+j = 4: arr[4] = 64 > 12  → không đổi
+
+minIdx = 2 (giá trị 12)
+swap(arr[1], arr[2]) → [11, 12, 25, 22, 64]
+
+Sau:    [11, 12, 25, 22, 64]
+        ✓ Sorted: [11, 12]
+```
+
+### Vòng lặp i = 2: Tìm min trong [2..4]
+```
+Trước:  [11, 12, 25, 22, 64]
+         [0] [1] [2] [3] [4]
+
+minIdx = 2 (arr[2] = 25)
+j = 3: arr[3] = 22 < 25  → minIdx = 3
+j = 4: arr[4] = 64 > 22  → không đổi
+
+minIdx = 3 (giá trị 22)
+swap(arr[2], arr[3]) → [11, 12, 22, 25, 64]
+
+Sau:    [11, 12, 22, 25, 64]
+        ✓ Sorted: [11, 12, 22]
+```
+
+### Vòng lặp i = 3: Tìm min trong [3..4]
+```
+Trước:  [11, 12, 22, 25, 64]
+         [0] [1] [2] [3] [4]
+
+minIdx = 3 (arr[3] = 25)
+j = 4: arr[4] = 64 > 25  → không đổi
+
+minIdx = 3 (giá trị 25)
+swap(arr[3], arr[3]) → không đổi
+
+Sau:    [11, 12, 22, 25, 64]
+        ✓ Sorted: [11, 12, 22, 25]
+```
+
+### Vòng lặp i = 4: Chỉ còn 1 phần tử
+```
+Trước:  [11, 12, 22, 25, 64]
+minIdx = 4, j = 5 > n → không vào vòng lặp
+swap(arr[4], arr[4]) → không đổi
+
+Sau:    [11, 12, 22, 25, 64]
+        ✓ Sorted: [11, 12, 22, 25, 64]
+```
+
+**Kết quả cuối:** `[11, 12, 22, 25, 64]`
+
+---
+
 ## Code
 
 Selection Sort using `while` loops:
